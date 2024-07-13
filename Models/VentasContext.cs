@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace EjemploEntity.Models;
@@ -36,23 +37,22 @@ public partial class VentasContext : DbContext
     public virtual DbSet<Venta> Ventas { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    => optionsBuilder.UseSqlServer("Server=CHRISBACOR\\SQLEXPRESS;Database=VENTAS;Integrated Security=True;TrustServerCertificate=True");
+    {
+        //optionsBuilder.UseSqlServer("Server=ARTUROPC;Database=MASTERCLASS;Integrated Security=True;TrustServerCertificate=True");
+    }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Caja>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("CAJA");
+            entity.ToTable("CAJA");
 
+            entity.Property(e => e.CajaId).HasColumnName("CAJA_ID");
             entity.Property(e => e.CajaDescripcion)
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("CAJA_DESCRIPCION");
-            entity.Property(e => e.CajaId)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("CAJA_ID");
             entity.Property(e => e.Estado)
                 .HasMaxLength(1)
                 .IsUnicode(false)
@@ -62,9 +62,9 @@ public partial class VentasContext : DbContext
 
         modelBuilder.Entity<Categorium>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("CATEGORIA");
+            entity.HasKey(e => e.CategId);
+
+            entity.ToTable("CATEGORIA");
 
             entity.Property(e => e.CategId).HasColumnName("CATEG_ID");
             entity.Property(e => e.CategNombre)
@@ -80,9 +80,7 @@ public partial class VentasContext : DbContext
 
         modelBuilder.Entity<Ciudad>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("CIUDAD");
+            entity.ToTable("CIUDAD");
 
             entity.Property(e => e.CiudadId).HasColumnName("CIUDAD_ID");
             entity.Property(e => e.CiudadNombre)
@@ -98,12 +96,10 @@ public partial class VentasContext : DbContext
 
         modelBuilder.Entity<Cliente>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("CLIENTE");
+            entity.ToTable("CLIENTE");
 
-            entity.Property(e => e.Cedula).HasColumnName("CEDULA");
             entity.Property(e => e.ClienteId).HasColumnName("CLIENTE_ID");
+            entity.Property(e => e.Cedula).HasColumnName("CEDULA");
             entity.Property(e => e.ClienteNombre)
                 .HasMaxLength(255)
                 .HasColumnName("CLIENTE_NOMBRE");
@@ -117,17 +113,15 @@ public partial class VentasContext : DbContext
 
         modelBuilder.Entity<Marca>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("MARCA");
+            entity.ToTable("MARCA");
 
+            entity.Property(e => e.MarcaId).HasColumnName("MARCA_ID");
             entity.Property(e => e.Estado)
                 .HasMaxLength(255)
                 .HasColumnName("ESTADO");
             entity.Property(e => e.FechaHoraReg)
                 .HasColumnType("datetime")
                 .HasColumnName("FECHA_HORA_REG");
-            entity.Property(e => e.MarcaId).HasColumnName("MARCA_ID");
             entity.Property(e => e.MarcaNombre)
                 .HasMaxLength(255)
                 .HasColumnName("MARCA_NOMBRE");
@@ -135,10 +129,9 @@ public partial class VentasContext : DbContext
 
         modelBuilder.Entity<Modelo>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("MODELO");
+            entity.ToTable("MODELO");
 
+            entity.Property(e => e.ModeloId).HasColumnName("MODELO_ID");
             entity.Property(e => e.Estado)
                 .HasMaxLength(255)
                 .HasColumnName("ESTADO");
@@ -148,7 +141,6 @@ public partial class VentasContext : DbContext
             entity.Property(e => e.ModeloDescripción)
                 .HasMaxLength(255)
                 .HasColumnName("MODELO_DESCRIPCIÓN");
-            entity.Property(e => e.ModeloId).HasColumnName("MODELO_ID");
         });
 
         modelBuilder.Entity<Producto>(entity =>
@@ -173,10 +165,9 @@ public partial class VentasContext : DbContext
 
         modelBuilder.Entity<Sucursal>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("SUCURSAL");
+            entity.ToTable("SUCURSAL");
 
+            entity.Property(e => e.SucursalId).HasColumnName("SUCURSAL_ID");
             entity.Property(e => e.CiudadId).HasColumnName("CIUDAD_ID");
             entity.Property(e => e.Estado)
                 .HasMaxLength(255)
@@ -184,7 +175,6 @@ public partial class VentasContext : DbContext
             entity.Property(e => e.FechaHoraReg)
                 .HasColumnType("datetime")
                 .HasColumnName("FECHA_HORA_REG");
-            entity.Property(e => e.SucursalId).HasColumnName("SUCURSAL_ID");
             entity.Property(e => e.SucursalNombre)
                 .HasMaxLength(255)
                 .HasColumnName("SUCURSAL_NOMBRE");
@@ -192,10 +182,11 @@ public partial class VentasContext : DbContext
 
         modelBuilder.Entity<Vendedor>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("VENDEDOR");
+            entity.ToTable("VENDEDOR");
 
+            entity.Property(e => e.VendedorId)
+                .ValueGeneratedNever()
+                .HasColumnName("VENDEDOR_ID");
             entity.Property(e => e.Estado)
                 .HasMaxLength(1)
                 .IsUnicode(false)
@@ -205,27 +196,24 @@ public partial class VentasContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("VENDEDOR_DESCRIPCION");
-            entity.Property(e => e.VendedorId).HasColumnName("VENDEDOR_ID");
         });
 
         modelBuilder.Entity<Venta>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("VENTAS");
+            entity.HasKey(e => e.IdFactura);
+
+            entity.ToTable("VENTAS");
 
             entity.HasIndex(e => e.FechaHora, "INDICE1");
 
-            entity.Property(e => e.CajaId)
-                .HasMaxLength(255)
-                .HasColumnName("CAJA_ID");
+            entity.Property(e => e.IdFactura).HasColumnName("ID_FACTURA");
+            entity.Property(e => e.CajaId).HasColumnName("CAJA_ID");
             entity.Property(e => e.CategId).HasColumnName("CATEG_ID");
             entity.Property(e => e.ClienteId).HasColumnName("CLIENTE_ID");
             entity.Property(e => e.Estado).HasColumnName("ESTADO");
             entity.Property(e => e.FechaHora)
                 .HasColumnType("datetime")
                 .HasColumnName("FECHA_HORA");
-            entity.Property(e => e.IdFactura).HasColumnName("ID_FACTURA");
             entity.Property(e => e.MarcaId).HasColumnName("MARCA_ID");
             entity.Property(e => e.ModeloId).HasColumnName("MODELO_ID");
             entity.Property(e => e.NumFact)
@@ -235,14 +223,40 @@ public partial class VentasContext : DbContext
             entity.Property(e => e.ProductoId).HasColumnName("PRODUCTO_ID");
             entity.Property(e => e.SucursalId).HasColumnName("SUCURSAL_ID");
             entity.Property(e => e.Unidades).HasColumnName("UNIDADES");
-            entity.Property(e => e.VendedorId)
-                .HasMaxLength(255)
-                .HasColumnName("VENDEDOR_ID");
+            entity.Property(e => e.VendedorId).HasColumnName("VENDEDOR_ID");
 
-            entity.HasOne(d => d.Producto).WithMany()
-                .HasForeignKey(d => d.ProductoId)
+            entity.HasOne(d => d.Caja).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.CajaId)
+                .HasConstraintName("FK_VENTAS_CAJA");
+
+            entity.HasOne(d => d.Categ).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.CategId)
                 .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK_PRODUCTO_VENTAS");
+                .HasConstraintName("FK_VENTAS_CATEG");
+
+            entity.HasOne(d => d.Cliente).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.ClienteId)
+                .HasConstraintName("FK_VENTAS_CLIENTE");
+
+            entity.HasOne(d => d.Marca).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.MarcaId)
+                .HasConstraintName("FK_VENTAS_MARCA");
+
+            entity.HasOne(d => d.Modelo).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.ModeloId)
+                .HasConstraintName("FK_VENTAS_MODELO");
+
+            entity.HasOne(d => d.Producto).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.ProductoId)
+                .HasConstraintName("FK_VENTAS_PRODUCTO");
+
+            entity.HasOne(d => d.Sucursal).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.SucursalId)
+                .HasConstraintName("FK_VENTAS_SUCURSAL");
+
+            entity.HasOne(d => d.Vendedor).WithMany(p => p.Venta)
+                .HasForeignKey(d => d.VendedorId)
+                .HasConstraintName("FK_VENTAS_VENDEDOR");
         });
         modelBuilder.HasSequence("SEC_CAJA");
 

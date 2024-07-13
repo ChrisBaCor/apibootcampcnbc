@@ -5,7 +5,7 @@ namespace EjemploEntity.Models;
 
 public partial class Venta
 {
-    public double? IdFactura { get; set; }
+    public double IdFactura { get; set; }
 
     public string? NumFact { get; set; }
 
@@ -23,9 +23,9 @@ public partial class Venta
 
     public double? SucursalId { get; set; }
 
-    public string? CajaId { get; set; }
+    public int? CajaId { get; set; }
 
-    public string? VendedorId { get; set; }
+    public int? VendedorId { get; set; }
 
     public double? Precio { get; set; }
 
@@ -33,5 +33,19 @@ public partial class Venta
 
     public int? Estado { get; set; }
 
+    public virtual Caja? Caja { get; set; }
+
+    public virtual Categorium? Categ { get; set; }
+
+    public virtual Cliente? Cliente { get; set; }
+
+    public virtual Marca? Marca { get; set; }
+
+    public virtual Modelo? Modelo { get; set; }
+
     public virtual Producto? Producto { get; set; }
+
+    public virtual Sucursal? Sucursal { get; set; }
+
+    public virtual Vendedor? Vendedor { get; set; }
 }

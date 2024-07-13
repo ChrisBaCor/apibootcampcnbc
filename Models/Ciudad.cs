@@ -5,7 +5,7 @@ namespace EjemploEntity.Models;
 
 public partial class Ciudad
 {
-    public double? CiudadId { get; set; }
+    public double CiudadId { get; set; }
 
     public string? CiudadNombre { get; set; }
 

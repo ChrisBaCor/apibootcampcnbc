@@ -20,4 +20,6 @@ public partial class Producto
     public double? MarcaId { get; set; }
 
     public double? ModeloId { get; set; }
+
+    public virtual ICollection<Venta> Venta { get; set; } = new List<Venta>();
 }

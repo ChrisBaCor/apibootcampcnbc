@@ -10,4 +10,6 @@ public partial class Vendedor
     public string? VendedorDescripcion { get; set; }
 
     public string? Estado { get; set; }
+
+    public virtual ICollection<Venta> Venta { get; set; } = new List<Venta>();
 }
