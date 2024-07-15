@@ -1,5 +1,6 @@
 ﻿using EjemploEntity.Interfaces;
 using EjemploEntity.Models;
+using EjemploEntity.Utilirarios;
 using Microsoft.EntityFrameworkCore;
 
 namespace EjemploEntity.Services
@@ -7,6 +8,7 @@ namespace EjemploEntity.Services
     public class CatalogoServices : ICatalogo
     {
         private readonly VentasContext _context;
+        private ControlError Log = new ControlError();
         public CatalogoServices(VentasContext context)
         {
             this._context = context;
@@ -23,7 +25,8 @@ namespace EjemploEntity.Services
             catch (Exception ex)
             {
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Se ha presentado una novedad en el Metodo: GetCategoria, Error: {ex.Message}";
+                respuesta.Mensaje = $"Se ha presentado una novedad en el Metodo: GetCategoria";
+                Log.LogErrorMetodos("CatalogoServices", "GerCategoria", ex.Message);
             }
             return respuesta;
         }
@@ -39,7 +42,8 @@ namespace EjemploEntity.Services
             catch (Exception ex)
             {
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Se ha presentado una novedad en el Metodo: GetMarca, Error: {ex.Message}";
+                respuesta.Mensaje = $"Se ha presentado una novedad en el Metodo: GetMarca";
+                Log.LogErrorMetodos("CatalogoServices", "GetMarca", ex.Message);
             }
             return respuesta;
         }
@@ -55,7 +59,8 @@ namespace EjemploEntity.Services
             catch (Exception ex)
             {
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Se ha presentado una novedad en el Metodo: GetModelo, Error: {ex.Message}";
+                respuesta.Mensaje = $"Se ha presentado una novedad en el Metodo: GetModelo";
+                Log.LogErrorMetodos("CatalogoServices", "GetModelo", ex.Message);
             }
             return respuesta;
         }
@@ -72,7 +77,8 @@ namespace EjemploEntity.Services
             catch (Exception ex)
             {
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Se ha presentado una novedad en el Metodo: GetSucursal, Error: {ex.Message}";
+                respuesta.Mensaje = $"Se ha presentado una novedad en el Metodo: GetSucursal";
+                Log.LogErrorMetodos("CatalogoServices", "GetSucursal", ex.Message);
             }
             return respuesta;
         }
@@ -98,13 +104,15 @@ namespace EjemploEntity.Services
 
                     respuesta.Cod = "000";
                     respuesta.Mensaje = "Se actualizó correctamente";
+
                 }
 
             }
             catch (Exception ex)
             {
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Se presento un error: {ex.Message}";
+                respuesta.Mensaje = $"Se presento un error";
+                Log.LogErrorMetodos("CatalogoServices", "PutCategoria", ex.Message);
             }
             return respuesta;
         }
@@ -135,7 +143,8 @@ namespace EjemploEntity.Services
             catch (Exception ex)
             {
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Se presento un error: {ex.Message}";
+                respuesta.Mensaje = $"Se presento un error";
+                Log.LogErrorMetodos("CatalogoServices", "PutMarca", ex.Message);
             }
             return respuesta;
         }

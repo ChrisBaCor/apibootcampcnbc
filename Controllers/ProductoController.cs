@@ -1,4 +1,5 @@
 ﻿using EjemploEntity.Interface;
+using EjemploEntity.Utilirarios;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EjemploEntity.Models
@@ -10,6 +11,7 @@ namespace EjemploEntity.Models
         //crear relación de dependencia
 
         private readonly IProducto _producto;
+        private ControlError Log = new ControlError();
 
         public ProductoController(IProducto producto)
         {
@@ -27,10 +29,10 @@ namespace EjemploEntity.Models
                 respuesta = await _producto.GetListaProducto(productoID);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                Log.LogErrorMetodos("ProductoController", "GetListaProducto", ex.Message);
             }
 
             return respuesta;
@@ -45,9 +47,9 @@ namespace EjemploEntity.Models
             {
                 respuesta = await _producto.GetProdPrecio(precio);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.LogErrorMetodos("ProductoController", "GetProdPrecio", ex.Message);
             }
             return respuesta;
         }
@@ -61,9 +63,9 @@ namespace EjemploEntity.Models
             {
                 respuesta = await _producto.PostProducto(producto);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.LogErrorMetodos("ProductoController", "PostProducto", ex.Message);
             }
             return respuesta;
         }
@@ -77,9 +79,9 @@ namespace EjemploEntity.Models
             {
                 respuesta = await _producto.PutProducto(producto);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.LogErrorMetodos("ProductoController", "PutProducto", ex.Message);
             }
             return respuesta;
         }

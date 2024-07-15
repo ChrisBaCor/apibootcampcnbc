@@ -1,6 +1,7 @@
 ﻿using EjemploEntity.Interface;
 using EjemploEntity.Interfaces;
 using EjemploEntity.Models;
+using EjemploEntity.Utilirarios;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EjemploEntity.Controllers
@@ -10,6 +11,7 @@ namespace EjemploEntity.Controllers
     public class CatalogoController : Controller
     {
         private readonly ICatalogo _catalogo;
+        private ControlError Log = new ControlError();
         public CatalogoController(ICatalogo catalogo)
         {
             this._catalogo = catalogo;
@@ -23,9 +25,9 @@ namespace EjemploEntity.Controllers
             {
                 respuesta = await _catalogo.GetCategoria();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.LogErrorMetodos("CatalogoController", "GetCategoria", ex.Message);
             }
             return respuesta;
         }
@@ -38,9 +40,9 @@ namespace EjemploEntity.Controllers
             {
                 respuesta = await _catalogo.GetMarca();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.LogErrorMetodos("CatalogoController", "GetMarca", ex.Message);
             }
             return respuesta;
         }
@@ -54,9 +56,9 @@ namespace EjemploEntity.Controllers
             {
                 respuesta = await _catalogo.GetModelo();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.LogErrorMetodos("CatalogoController", "GetModelo", ex.Message);
             }
             return respuesta;
         }
@@ -70,9 +72,9 @@ namespace EjemploEntity.Controllers
             {
                 respuesta = await _catalogo.GetSucursal();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.LogErrorMetodos("CatalogoController", "GetSucursal", ex.Message);
             }
             return respuesta;
         }
@@ -86,9 +88,9 @@ namespace EjemploEntity.Controllers
             {
                 respuesta = await _catalogo.PutCategoria(categoria);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.LogErrorMetodos("CatalogoController", "PutCategoria", ex.Message);
             }
             return respuesta;
         }
@@ -101,9 +103,9 @@ namespace EjemploEntity.Controllers
             {
                 respuesta = await _catalogo.PutMarca(marca);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.LogErrorMetodos("CatalogoController", "PutMarca", ex.Message);
             }
             return respuesta;
         }
@@ -116,9 +118,9 @@ namespace EjemploEntity.Controllers
             {
                 respuesta = await _catalogo.PutModelo(modelo);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.LogErrorMetodos("CatalogoControllerr", "PutModelo", ex.Message);
             }
             return respuesta;
         }
@@ -131,9 +133,9 @@ namespace EjemploEntity.Controllers
             {
                 respuesta = await _catalogo.PutSucursal(sucursal);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.LogErrorMetodos("CatalogoController", "PutSucursal", ex.Message);
             }
             return respuesta;
         }
@@ -146,9 +148,9 @@ namespace EjemploEntity.Controllers
             {
                 respuesta = await _catalogo.PostCategoria(categoria);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.LogErrorMetodos("CatalogoController", "PostCategoria", ex.Message);
             }
             return respuesta;
         }
@@ -161,9 +163,9 @@ namespace EjemploEntity.Controllers
             {
                 respuesta = await _catalogo.PostMarca(marca);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.LogErrorMetodos("CatalogocController", "PostMarca", ex.Message);
             }
             return respuesta;
         }
@@ -177,9 +179,9 @@ namespace EjemploEntity.Controllers
             {
                 respuesta = await _catalogo.PostModelo(modelo);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.LogErrorMetodos("CatalogoController", "PostModelo", ex.Message);
             }
             return respuesta;
         }
@@ -193,9 +195,9 @@ namespace EjemploEntity.Controllers
             {
                 respuesta = await _catalogo.PostSucursal(sucursal);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.LogErrorMetodos("CatalogoController", "PostSucursal", ex.Message);
             }
             return respuesta;
         }

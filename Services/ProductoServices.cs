@@ -1,5 +1,6 @@
 ﻿using EjemploEntity.Interface;
 using EjemploEntity.Models;
+using EjemploEntity.Utilirarios;
 using Microsoft.EntityFrameworkCore;
 
 namespace EjemploEntity.Services
@@ -7,6 +8,7 @@ namespace EjemploEntity.Services
     public class ProductoServices : IProducto
     {
         private readonly VentasContext _context;
+        private ControlError Log = new ControlError();
 
         public ProductoServices(VentasContext context)
         {
@@ -27,9 +29,9 @@ namespace EjemploEntity.Services
                     respuesta = await _context.Productos.Where(x => x.ProductoId.Equals(productoID)).ToListAsync();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.LogErrorMetodos("ProductoServices", "GetListaProducto", ex.Message);
             }
 
             return respuesta;
@@ -49,10 +51,10 @@ namespace EjemploEntity.Services
                     respuesta = await _context.Productos.Where(x => x.Precio == precio).ToListAsync();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                Log.LogErrorMetodos("ProductoServices", "GetListaPrecio", ex.Message);
             }
             return respuesta;
         }
@@ -76,7 +78,8 @@ namespace EjemploEntity.Services
             {
 
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Se presento un error: {ex.Message}";
+                respuesta.Mensaje = $"Se presento una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("ProductoServices", "PostProducto", ex.Message);
 
             }
             return respuesta;
@@ -105,7 +108,8 @@ namespace EjemploEntity.Services
             catch (Exception ex)
             {
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Se presento un error: {ex.Message}";
+                respuesta.Mensaje = $"Se presento una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("ProductoServices", "PutProducto", ex.Message);
             }
             return respuesta;
         }
