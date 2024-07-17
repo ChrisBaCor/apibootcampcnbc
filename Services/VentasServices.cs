@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 namespace EjemploEntity.Services
 {
     public class VentasServices : IVentas
+
     {
         private readonly VentasContext _context;
         private ControlError Log = new ControlError();
@@ -18,7 +19,7 @@ namespace EjemploEntity.Services
 
 
         public async Task<Respuesta> GetVenta(string? numFactura)
-        {
+        { 
             var respuesta = new Respuesta();
             try
             {
@@ -93,6 +94,26 @@ namespace EjemploEntity.Services
                 Log.LogErrorMetodos("VentasServices", "GetVenta", ex.Message);
             }
             return respuesta;
+        }
+
+        public Task<Respuesta> GetVenta(string? numFactura, double precio, double vendedor, double clienteId, string fechaDesde, string fechaHasta)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Respuesta> GetVentaReporte()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Respuesta> PostVenta(Venta venta)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Respuesta> PutVenta(Venta venta)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -306,5 +306,10 @@ namespace EjemploEntity.Services
             }
             return respuesta;
         }
+
+        public Task<Respuesta> GetVendedor(double codVendedor, string? estado)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

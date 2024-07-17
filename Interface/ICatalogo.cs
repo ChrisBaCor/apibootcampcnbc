@@ -16,5 +16,7 @@ namespace EjemploEntity.Interfaces
         Task<Respuesta> PostMarca(Marca marca);
         Task<Respuesta> PostModelo(Modelo modelo);
         Task<Respuesta> PostSucursal(Sucursal sucursal);
+
+        Task<Respuesta> GetVendedor(double codVendedor, string? estado);
     }
 }
